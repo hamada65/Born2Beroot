@@ -6,11 +6,11 @@ arch=$(uname -a)
 
 ###### [ vCpu ] ######
 
-vc=$(lscpu | grep "Socket(s)" | awk '{print $2}')
+vc=$(grep "physical id" /proc/cpuinfo | wc -l)
 
 ###### [ CPU ] ######
 
-cp=$(lscpu | grep "Core(s) per socket" | awk '{print $NF}')
+cp=$(nproc --all)
 
 ###### [ Memory Usage ] ######
 
@@ -24,7 +24,7 @@ percentage_space=$(df -Bm | grep '^/dev' | grep -v '/boot$' | awk '{i += $2} {j 
 
 ###### [ CPU Load ] ######
 
-cl=$(vmstat 1 1 | awk 'NR==3 { printf "%.1f%%", 100 - $15}')
+cl=$(mpstat | grep "all " | awk '{printf "%.2f%%", 100 - $NF}')
 
 ###### [ Last Boot ] ######
 
