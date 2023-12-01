@@ -2,20 +2,20 @@
 
 ###### [ Architecture ] #######
 
-arch=$(uname -a)
+arch=$(uname -a) # Unix Name : all
 
 ###### [ vCpu ] ######
 
-vc=$(grep "physical id" /proc/cpuinfo | wc -l)
-
+vc=$(grep "physical id" /proc/cpuinfo | wc -l) # GREP : get line that contain "physical id" from the file /proc/cpuinfo
+# WC used to count the number of words, lines, and characters
 ###### [ CPU ] ######
 
-cp=$(nproc --all)
+cp=$(nproc --all) # print the number of installed processors
 
 ###### [ Memory Usage ] ######
 
-mu=$(free -m | grep Mem | awk '{printf "%s/%sMB (%.2f%%)", $3, $2, $3/$2 * 100}')
-
+mu=$(free -m | grep Mem | awk '{printf "%s/%sMB (%.2f%%)", $3, $2, $3/$2 * 100}') # Free : display informations about memory
+# awk : programing language 
 ###### [ Disk Usage ] ######
 
 total_space=$(df -Bg | grep '^/dev' | grep -v '/boot$' | awk '{counter += $2} END {printf("%dGb", counter)}')
