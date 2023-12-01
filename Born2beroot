@@ -1,0 +1,110 @@
+sudo addgroup user42
+sduo adduser testuser
+sudo usermod -aG sudo mel-rhay //add user mel-rhay to group sudo
+sudo usermod -aG user42 mel-rhay //add user mel-rhay to group user42
+getent group sudo || print users in group sudo
+####ssh
+sudo apt install openssh-server
+sudo vim /etc/ssh/sshd_config // edit ssh port
+change network to bridge
+
+###change host name
+sudo hostnamectl set-hostname <new one>
+sudo nano /etc/hosts
+
+####pam pwquality
+sudo apt install libpam-pwquality
+sudo vim /etc/pam.d/common-password
+minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 maxrepeat=3 reject_username enforce_for_root difok=7
+
+###password expire
+sudo vim /etc/login.defs
+sudo chage -M 30 -m 2 -W 7 mel-rhay
+sudo chage -M 30 -m 2 -W 7 root
+
+###strong configuration for your sudo group
+sudo visudo
+Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+Defaults        badpass_message="GHEYERHA A SA7BNA"
+Defaults        passwd_tries=3
+Defaults        logfile=/var/log/sudo/sudo.log
+Defaults        requiretty
+Defaults        log_input, log_output
+mkdir /var/log/sudo
+
+
+####shell script
+sudo apt-get install sysstat
+
+crontab -e
+*/10 * * * * sh ~/monitoring.sh
+
+###### [BONUS] ######
+
+####vsftpd
+sudo apt install vsftpd
+
+#####work press
+sudo apt install lighttpd
+sudo apt install mariadb-server
+sudo apt install php-cgi php-mysql php-common php-gd php-curl php-intl php-mbstring php-xmlrpc php-xml php-bcmath php-json
+
+sudo lighttpd-enable-mod fastcgi-php
+sudo service lighttpd restart
+sudo mysql -u root -p
+CREATE DATABASE wordpress;
+CREATE USER 'mel-rhay'@'localhost' IDENTIFIED BY '1';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'mel-rhay'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+cd /var/www/html
+sduo chmod 755 /var/www/html
+sudo wget https://wordpress.org/latest.tar.gz
+sudo tar -xzvf latest.tar.gz
+sudo chown -R www-data:www-data wordpress
+
+
+
+
+#############infromations
+
+##Virtualization
+
+Virtualization is a technology that allows multiple operating systems (OS) or instances of an OS to run on a single physical computer,
+
+##VM
+A virtual machine (VM) is a software-based emulation of a physical computer. It allows you to run an operating system (OS) within another operating system. In other words, it creates a virtualized environment that simulates the hardware and software of a physical computer.
+
+## WHY DEBIAN ?
+Debian is highly recommended if you are new to system administration
+Debian is one of the oldest and most widely used Linux distributions. 
+Debian has a stable release cycle with long periods between major releases.
+Debian uses the APT (Advanced Package Tool) package management system, which simplifies the process of installing, updating, and removing software packages.
+
+### DIFF between Debian and Rocky
+debian 1993 rock 2021
+debian stable than Rocky
+
+## Benefits of virtual machine
+Virtualization allows multiple virtual machines to run on a single physical host
+VMS can be easily cloned or snapshotted
+dynamic allocatiob of resources and flexible management (CPU, Memory, Storage)
+test software without affecting their host system or other VM
+
+### Diff between apt and aptitude
+apt more easily than aptitude : like aptitude can manage the package dependencies and more things
+When facing a package conflict, `apt` will not fix the issue while `aptitude` will suggest a resolution that can do the job
+
+## apparmor
+AppArmor acts as a protector by enforcing access control policies on processes and limiting their capabilities
+
+##UFW
+Uncomplicated Firewall : asier for users to set up and manage a firewall without dealing with complex iptables syntax.
+
+##SSH
+Secure Shell :  is a cryptographic network protocol used for secure communication over a potentially unsecured network
+
+##Cron
+It is a daemon process that runs tasks or commands at predetermined times or intervals
+
+#why end with D
